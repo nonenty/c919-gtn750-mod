@@ -1,6 +1,6 @@
 **Manual installation required! ALWAYS BACK UP files before editing!**
 
-0. IMPORTANT: Clone this repository using `git clone` rather than downloading as ZIP. Binary files are stored in Git LFS and won't be included in ZIP downloads, which will result in broken cockpit displays.
+0. IMPORTANT: Clone this repository using `git clone` rather than downloading as ZIP. Binary files in `models` are stored in Git LFS and won't be included in ZIP downloads, which will result in broken cockpit displays. If you don't have git installed, download models.zip [here](https://github.com/nonenty/c919-gtn750-mod/releases).
 
 1. Download the PMS50 GTN750 [here](https://pms50.com/msfs/downloads/gtn750-basic/) and follow its [installation instructions](https://pms50.com/fs2020/gtn750/documentation.pdf)
 
