@@ -25,7 +25,7 @@ jobs:
         run: git lfs pull
         
       - name: Zip models folder
-        run: zip -r models.zip models/
+        run: zip -r full.zip ./ -x ".*"
 
       - name: Create Release
         id: create_release
@@ -45,6 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./models.zip
-          asset_name: models.zip
+          asset_path: ./full.zip
+          asset_name: full.zip
           asset_content_type: application/zip
