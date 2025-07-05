@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. v1.0.0)'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code with LFS
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Ensure LFS files are downloaded
+        run: git lfs pull
+        
+      - name: Zip models folder
+        run: zip -r models.zip models/
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || inputs.version }}
+          release_name: Release ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || inputs.version }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./models.zip
+          asset_name: models.zip
+          asset_content_type: application/zip
